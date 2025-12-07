@@ -317,6 +317,9 @@
                     <target>${maven.compile.target}</target>
                     <source>${maven.compile.source}</source>
                     <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
