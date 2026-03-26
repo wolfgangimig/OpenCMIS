@@ -193,12 +193,25 @@ public class VersioningServiceImpl extends AbstractBrowserBindingService impleme
     @Override
     public List<ObjectData> getAllVersions(String repositoryId, String objectId, String versionSeriesId, String filter,
             Boolean includeAllowableActions, ExtensionsData extension) {
+    	
+    	// wimix: if objectId is not set, use versionSeriesId as objectId and replace parameter name in URL
+    	boolean isVersionSeriesId = (objectId == null || objectId.isEmpty());
+    	if (isVersionSeriesId) {
+			objectId = versionSeriesId;
+		}
+    	
         // build URL
         UrlBuilder url = getObjectUrl(repositoryId, objectId, Constants.SELECTOR_VERSIONS);
         url.addParameter(Constants.PARAM_FILTER, filter);
         url.addParameter(Constants.PARAM_ALLOWABLE_ACTIONS, includeAllowableActions);
         url.addParameter(Constants.PARAM_SUCCINCT, getSuccinctParameter());
         url.addParameter(Constants.PARAM_DATETIME_FORMAT, getDateTimeFormatParameter());
+        
+        if (isVersionSeriesId) {	
+        	String urlStr = url.toString();
+        	urlStr = urlStr.replace(Constants.PARAM_OBJECT_ID, Constants.PARAM_VERSION_SERIES_ID);
+        	url = new UrlBuilder(urlStr);
+        }
 
         // read and parse
         Response resp = read(url);
