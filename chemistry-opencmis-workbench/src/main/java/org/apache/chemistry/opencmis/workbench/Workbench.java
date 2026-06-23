@@ -26,12 +26,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.apache.chemistry.opencmis.workbench.model.ClientSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Workbench {
 
     private static final Logger LOG = LoggerFactory.getLogger(Workbench.class);
+    
+    static {
+		System.setProperty(BasicLoginTab.SYSPROP_URL, "http://localhost:8090/server/browser");
+		System.setProperty(BasicLoginTab.SYSPROP_BINDING, "browser");
+		System.setProperty(BasicLoginTab.SYSPROP_USER, "TestTCK");
+	}
 
     public Workbench() {
         // set Mac OS X name
